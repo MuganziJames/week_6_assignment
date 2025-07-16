@@ -135,9 +135,76 @@ def create_crop_yield_model():
 ### Real-Time Data Pipeline
 
 ```
-[Sensors] → [Edge Devices] → [LoRaWAN Gateway] → [Cloud Platform] → [AI Processing] → [Farmer Dashboard]
-    ↓               ↓                ↓                ↓               ↓                ↓
-Collect Data → Local Processing → Transmission → Data Storage → Model Inference → Actionable Insights
+╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                        🌱 AGRISENSE AI DATA FLOW ARCHITECTURE 🌱                  ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   🌾 FIELD      │    │   💻 EDGE       │    │   📡 CONNECTIVITY│    │   ☁️  CLOUD     │
+│   SENSORS       │────┤   COMPUTING     │────┤   LAYER         │────┤   PLATFORM      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │                       │
+    ┌────▼────┐              ┌───▼───┐              ┌────▼────┐              ┌───▼───┐
+    │ Soil:   │              │ RPi4  │              │LoRaWAN  │              │InfluxDB│
+    │ • pH    │              │Gateway│              │Gateway  │              │Apache │
+    │ • NPK   │              │ • Data│              │ • 5km   │              │Kafka  │
+    │ • H2O   │              │  Agg  │              │  Range  │              │       │
+    └─────────┘              │ • Edge│              │ • 50kbps│              └───────┘
+    ┌─────────┐              │  AI   │              └─────────┘                   │
+    │Weather: │              │ • Filter              ┌─────────┐                   │
+    │ • Temp  │              └───────┘              │Cellular │                   │
+    │ • Humid │                  │                  │ Backup  │                   │
+    │ • Rain  │                  │                  └─────────┘                   │
+    └─────────┘                  │                       │                       │
+    ┌─────────┐                  │                       │                       │
+    │ Plant:  │                  │                       │                       │
+    │ • Growth│─────────────────▼                       │                       │
+    │ • Health│                                          │                       │
+    │ • NDVI  │                                          │                       │
+    └─────────┘                                          │                       │
+         │                                               │                       │
+         └───────────────────────────────────────────────┘                       │
+                                                                                 │
+┌─────────────────────────────────────────────────────────────────────────────────▼─┐
+│                           🤖 AI PROCESSING ENGINE 🤖                              │
+├─────────────────┬─────────────────┬─────────────────┬─────────────────────────────┤
+│   📈 CROP       │   💧 IRRIGATION │   🔬 DISEASE    │   📊 ANALYTICS              │
+│   YIELD         │   OPTIMIZATION  │   DETECTION     │   & REPORTING               │
+│   PREDICTION    │                 │                 │                             │
+│                 │   • RL Agent    │   • CNN Model   │   • Time Series Analysis   │
+│   • LSTM+Dense  │   • Q-Learning  │   • Image Class │   • Trend Prediction       │
+│   • 30-day Pred │   • Water Mgmt  │   • Early Alert │   • Performance Metrics    │
+└─────────────────┴─────────────────┴─────────────────┴─────────────────────────────┘
+         │                   │                   │                   │
+         ▼                   ▼                   ▼                   ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                    👨‍🌾 FARMER INTERFACE & AUTOMATION 👨‍🌾                           │
+├─────────────────┬─────────────────┬─────────────────┬─────────────────────────────┤
+│   📱 MOBILE     │   🖥️  WEB       │   🚨 SMART      │   🤖 AUTOMATED              │
+│   DASHBOARD     │   DASHBOARD     │   ALERTS        │   SYSTEMS                   │
+│                 │                 │                 │                             │
+│   • Real-time   │   • Analytics   │   • SMS/Email   │   • Auto Irrigation         │
+│   • Controls    │   • Historical  │   • Push Notif  │   • Fertilizer Dosing       │
+│   • Alerts      │   • Reporting   │   • Threshold   │   • Pest Control            │
+└─────────────────┴─────────────────┴─────────────────┴─────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                              📈 DATA FLOW METRICS 📈                                │
+├─────────────────┬─────────────────┬─────────────────┬─────────────────────────────┤
+│   ⚡ LATENCY    │   📊 THROUGHPUT │   🔒 SECURITY   │   ⚙️  RELIABILITY            │
+│                 │                 │                 │                             │
+│   • Sensor: 30s │   • 50TB/day    │   • End-to-End  │   • 99.9% Uptime           │
+│   • Edge: 1-5s  │   • 10K sensors │   • Encryption  │   • Redundant Systems       │
+│   • Cloud: 10s  │   • Real-time   │   • Auth/Auth   │   • Backup Connectivity     │
+│   • Alert: 30s  │   • Processing  │   • Data Privacy│   • Disaster Recovery       │
+└─────────────────┴─────────────────┴─────────────────┴─────────────────────────────┘
+
+🔄 EXTERNAL DATA INTEGRATION:
+   Weather APIs ──► Crop Market Data ──► Satellite Imagery ──► Research Databases
+        │                    │                   │                     │
+        └────────────────────┼───────────────────┼─────────────────────┘
+                             ▼                   ▼
+                    Enhanced AI Predictions & Recommendations
 ```
 
 #### **Data Flow Stages:**
